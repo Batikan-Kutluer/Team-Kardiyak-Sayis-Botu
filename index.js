@@ -1,4 +1,5 @@
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
+
 let Discord = require("discord.js");
 let fs = require("fs");
 
