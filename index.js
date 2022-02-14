@@ -92,7 +92,7 @@ client.on("messageCreate", (m) => {
       } else {
         m.reply(
           last.user !== m.channel.lastMessage.author.id
-            ? "Yanlış sayı!"
+            ? `Yanlış sayı! (${last.num + 1})`
             : "Son yazan kişi sensin!"
         )
           .then((_) => {
