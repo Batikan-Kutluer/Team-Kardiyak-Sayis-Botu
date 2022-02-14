@@ -40,7 +40,9 @@ client.on("messageCreate", (m) => {
       stop = true;
       m.reply("Stopping...").then((t) => {
         setTimeout(() => {
-          t.delete();
+          t.delete().catch(() => {
+            m.channel.send("Yeterli iznim yok!");
+          });
         }, 3000);
       });
       break;
@@ -64,7 +66,6 @@ client.on("messageCreate", (m) => {
       if (auth(m)) return;
 
       game_channel = m.channel.id;
-      1;
       break;
 
     default:
@@ -96,8 +97,12 @@ client.on("messageCreate", (m) => {
         )
           .then((_) => {
             setTimeout(() => {
-              m.delete();
-              _.delete();
+              m.delete().catch(() => {
+                m.channel.send("Yeterli iznim yok!");
+              });
+              _.delete().catch(() => {
+                m.channel.send("Yeterli iznim yok!");
+              });
             }, 3000);
           })
           .catch(() => {
