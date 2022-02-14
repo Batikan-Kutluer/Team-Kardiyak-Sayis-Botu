@@ -60,6 +60,7 @@ client.on("messageCreate", (m) => {
       break;
 
     case "--gamechannel":
+      console.log(auth(m));
       if (auth(m)) return;
 
       game_channel = m.channel.id;
@@ -73,6 +74,8 @@ client.on("messageCreate", (m) => {
         m.channel.id !== (game_channel || process.env.botChannel)
       )
         return;
+
+      if (m.content.startsWith(".")) return;
 
       if (
         Number(m.content) === last.num + 1 &&
