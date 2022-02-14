@@ -2,6 +2,8 @@ require("dotenv").config();
 let Discord = require("discord.js");
 let fs = require("fs");
 
+require("./webserver");
+
 let intents = new Discord.Intents(32767);
 let client = new Discord.Client({ intents });
 
