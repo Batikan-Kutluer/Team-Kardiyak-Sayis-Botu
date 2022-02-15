@@ -44,6 +44,16 @@ client.on("messageCreate", (m) => {
       }
 
       break;
+    case "--sayi":
+      m.reply(`${last.num || "0"}`)
+        .then(() => {
+          setTimeout((_) => {
+            _.delete();
+            m.delete();
+          }, 3 * 1000);
+        })
+        .catch(() => {});
+      break;
 
     case "--stop":
       if (auth(m)) return;
@@ -80,6 +90,9 @@ client.on("messageCreate", (m) => {
       break;
 
     default:
+      if (!Number(m.cleanContent)) {
+        if (m.cleanContent != "0") return;
+      }
       if (
         m.author.bot ||
         stop ||
@@ -99,6 +112,8 @@ client.on("messageCreate", (m) => {
           last.user = m.channel.lastMessage.author.id;
 
         fs.writeFileSync("./db.json", JSON.stringify(last), "utf8");
+        m.react("👌");
+
         console.log(last.user, m.channel.lastMessage.author.id);
       } else {
         m.reply(
