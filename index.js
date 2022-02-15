@@ -27,11 +27,22 @@ let auth = (m) =>
   !m.member.permissions.has(Discord.Permissions.FLAGS.KICK_MEMBERS);
 
 client.on("messageCreate", (m) => {
-  switch (m.content) {
+  let args = m.cleanContent.split(" ");
+
+  switch (args[0] || m.cleanContent) {
     case "--test":
       if (auth(m)) return;
 
       m.reply("Pong!");
+      break;
+    case "--set":
+      if (auth(m)) return;
+
+      if (Number(args[1])) {
+        last.num = Number(args[1]);
+        fs.writeFileSync("./db.json", JSON.stringify(last), "utf8");
+      }
+
       break;
 
     case "--stop":
