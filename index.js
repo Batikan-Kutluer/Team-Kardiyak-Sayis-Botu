@@ -49,8 +49,14 @@ client.on("messageCreate", (m) => {
         m.reply(`${last.num || "0"}`)
           .then(() => {
             setTimeout((_) => {
-              _?.delete();
-              m?.delete();
+              m?.delete().catch(() => {
+                m.channel.send("Yeterli iznim yok!");
+              });
+              setTimeout(() => {
+                _?.delete().catch(() => {
+                  m.channel.send("Yeterli iznim yok!");
+                });
+              }, 1 * 1000);
             }, 3 * 1000);
           })
           .catch(() => {});
@@ -65,7 +71,7 @@ client.on("messageCreate", (m) => {
             t.delete().catch(() => {
               m.channel.send("Yeterli iznim yok!");
             });
-          }, 3000);
+          }, 3 * 1000);
         });
         break;
 
@@ -127,10 +133,12 @@ client.on("messageCreate", (m) => {
                 m?.delete().catch(() => {
                   m.channel.send("Yeterli iznim yok!");
                 });
-                _?.delete().catch(() => {
-                  m.channel.send("Yeterli iznim yok!");
-                });
-              }, 3000);
+                setTimeout(() => {
+                  _?.delete().catch(() => {
+                    m.channel.send("Yeterli iznim yok!");
+                  });
+                }, 1 * 1000);
+              }, 3 * 1000);
             })
             .catch(() => {
               m.channel.send(
